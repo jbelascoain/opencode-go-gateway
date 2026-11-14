@@ -1,5 +1,9 @@
 name: dockerhub-description
 
+# DOCKERHUB_TOKEN must be a Personal Access Token with the
+# "Read, Write, Delete" scope. "Read & Write" is not enough for the
+# description API and returns 403 Forbidden.
+
 on:
   push:
     branches: [main]
@@ -27,7 +31,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ secrets.DOCKERHUB_USERNAME }}/opencode-go-gateway
-          short-description: Tiny dependency-free gateway that adds the x-opencode-session header so any client can use OpenCode Go.
+          # Docker Hub truncates this field at 100 bytes.
+          short-description: Dependency-free gateway that adds x-opencode-session for OpenCode Go.
           readme-filepath: ./README.md
           # Rewrites relative links (LICENSE, SECURITY.md) to absolute GitHub URLs,
           # which is what Docker Hub needs.
