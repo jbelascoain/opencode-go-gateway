@@ -1,0 +1,31 @@
+services:
+  gateway:
+    image: jbelascoain/opencode-go-gateway:latest
+    # To build locally instead of pulling from Docker Hub, comment the line
+    # above and uncomment the next one.
+    # build: .
+    container_name: opencode-go-gateway
+    restart: unless-stopped
+    env_file: [.env]
+    environment:
+      HOST: 0.0.0.0
+      PORT: "4000"
+    ports:
+      # Loopback by default. Set BIND_ADDR to your LAN IP (for example
+      # BIND_ADDR=192.168.1.10) to let other machines reach it.
+      - "${BIND_ADDR:-127.0.0.1}:4000:4000"
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4000/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

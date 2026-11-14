@@ -1,0 +1,44 @@
+{
+  "name": "opencode-go-gateway",
+  "version": "1.0.0",
+  "description": "Tiny dependency-free gateway that adds the x-opencode-session header so any client can use OpenCode Go.",
+  "type": "module",
+  "main": "src/gateway.mjs",
+  "exports": {
+    ".": "./src/gateway.mjs"
+  },
+  "bin": {
+    "opencode-go-gateway": "src/index.mjs"
+  },
+  "files": [
+    "src"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "test": "node --test",
+    "test:watch": "node --test --watch"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-go",
+    "gateway",
+    "proxy",
+    "openai-compatible",
+    "anthropic",
+    "llm",
+    "n8n"
+  ],
+  "author": "jbelascoain",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbelascoain/opencode-go-gateway.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jbelascoain/opencode-go-gateway/issues"
+  },
+  "homepage": "https://github.com/jbelascoain/opencode-go-gateway#readme"
+}

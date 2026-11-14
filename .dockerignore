@@ -1,0 +1,14 @@
+.git
+.github
+test
+node_modules
+npm-debug.log
+*.md
+LICENSE
+.env
+.env.*
+!.env.example
+compose.yaml
+Dockerfile
+.dockerignore
+.gitignore
