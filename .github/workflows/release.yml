@@ -38,9 +38,10 @@ jobs:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/opencode-go-gateway
           tags: |
             type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha,prefix=sha-
+          # latest=auto only tags the highest stable semver, so a
+          # prerelease such as v2.0.0-beta never moves :latest.
+          flavor: |
+            latest=auto
           labels: |
             org.opencontainers.image.title=opencode-go-gateway
             org.opencontainers.image.description=Tiny dependency-free gateway that adds the x-opencode-session header so any client can use OpenCode Go.

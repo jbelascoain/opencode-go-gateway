@@ -2,8 +2,9 @@
 
 ## Supported versions
 
-Only the latest released tag receives fixes. Images are published from tags as
-semantic-version tags on Docker Hub (`1`, `1.0`, `1.0.x`, `latest`).
+Only the latest released tag receives fixes. Each release publishes two Docker
+Hub tags: the exact version (`1.0.2`) and `latest`. Pin the exact version for
+reproducible deployments; `latest` always points at the highest stable release.
 
 ## Reporting a vulnerability
 
