@@ -1,0 +1,34 @@
+name: dockerhub-description
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - README.md
+      - .github/workflows/dockerhub-description.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dockerhub-description
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Sync README to Docker Hub
+        uses: peter-evans/dockerhub-description@v5
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ secrets.DOCKERHUB_USERNAME }}/opencode-go-gateway
+          short-description: Tiny dependency-free gateway that adds the x-opencode-session header so any client can use OpenCode Go.
+          readme-filepath: ./README.md
+          # Rewrites relative links (LICENSE, SECURITY.md) to absolute GitHub URLs,
+          # which is what Docker Hub needs.
+          enable-url-completion: "true"
