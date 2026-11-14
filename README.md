@@ -95,6 +95,12 @@ npm start
 | `UPSTREAM_BASE` | `https://opencode.ai` | Upstream origin. Mostly useful for tests. |
 | `UPSTREAM_HEADERS_TIMEOUT_MS` | `60000` | Time allowed until upstream response headers arrive. |
 | `MAX_BODY_BYTES` | `16777216` | Maximum request body size. |
+| `BIND_ADDR` | `127.0.0.1` | **Docker Compose only.** Host interface where port 4000 is published. Set it to your LAN IP to expose the gateway. The app never reads it. |
+
+`HOST` is the interface the Node process binds to **inside** the container and
+must stay `0.0.0.0`: Docker forwards traffic to the container's own IP, so
+binding to loopback there breaks the published port. To control who can reach
+the gateway, change `BIND_ADDR` (or your firewall), not `HOST`.
 
 Two credential modes:
 
@@ -160,7 +166,9 @@ print(client.chat.completions.create(
 ## Which model goes where
 
 OpenCode publishes the API family per model. Using the wrong route returns a
-model-not-found style error, not a 500.
+model-not-found style error, not a 500. The authoritative list is the
+[endpoints table in the OpenCode Go docs](https://opencode.ai/docs/console/go#endpoints);
+the table below is a shortcut for the models most people use.
 
 | Model | Model ID | Route |
 | --- | --- | --- |
